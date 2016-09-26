@@ -30,6 +30,22 @@
      ]
  };
 
+ // Neil's Example Album
+ var albumJamesM = {
+     title: 'Flying Fury',
+     artist: 'James McCudden',
+     label: 'RAF',
+     year: '1917',
+     albumArtUrl: 'assets/images/album_covers/20.png',
+     songs: [
+         { title: 'Albatross CII', duration: '4:08' },
+         { title: 'Rumpler', duration: '3:49' },
+         { title: 'Fokker DrI Triplane', duration: '3:33'},
+         { title: 'Albatross DV', duration: '3:50' },
+         { title: 'Fokker D7', duration: '2:54'}
+     ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -67,4 +83,29 @@
  
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+ 
+     // Begin Neil's Additions
+     
+     var cvrIndex = 0;
+     var coverToggle = function(){
+         if(cvrIndex == 0){
+             albumMarconi;
+         } else if(cvrIndex == 1) {
+             albumJamesM;
+         } else {
+             albumPicasso;
+         }
+         cvrIndex += cvrIndex;
+         if(cvrIndex > 2) {
+             cvrIndex = 0;
+         }
+     };
+     
+     var albumCover = document.getElementsByClassName('album-cover-art')[0];
+     
+        albumCover.addEventListener('click', function(event){
+            coverToggle;
+        });
+     
+     // End Neil's Additions
  };
