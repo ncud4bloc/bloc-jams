@@ -58,6 +58,7 @@
      return template;
  };
 
+
  var setCurrentAlbum = function(album) {
      // #1
      var albumTitle = document.getElementsByClassName('album-view-title')[0];
@@ -87,15 +88,16 @@
      // Begin Neil's Additions
      
      var cvrIndex = 0;
+     
      var coverToggle = function(){
          if(cvrIndex == 0){
-             albumMarconi;
+             setCurrentAlbum(albumMarconi);
          } else if(cvrIndex == 1) {
-             albumJamesM;
+             setCurrentAlbum(albumJamesM);
          } else {
-             albumPicasso;
+             setCurrentAlbum(albumPicasso);
          }
-         cvrIndex += cvrIndex;
+         cvrIndex++;
          if(cvrIndex > 2) {
              cvrIndex = 0;
          }
@@ -105,6 +107,7 @@
      
         albumCover.addEventListener('click', function(event){
             coverToggle;
+            
         });
      
      // End Neil's Additions
