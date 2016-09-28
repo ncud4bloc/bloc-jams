@@ -106,7 +106,7 @@
      var albumCover = document.getElementsByClassName('album-cover-art')[0];
      
         albumCover.addEventListener('click', function(event){
-            coverToggle;
+            coverToggle();
             
         });
      
