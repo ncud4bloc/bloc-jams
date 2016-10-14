@@ -194,6 +194,21 @@ var previousSong = function() {
     
 };
 
+// togglePlayFromPlayerBar is an Assignment-20 addition
+
+var togglePlayFromPlayerBar = function() {                                  
+    if (currentSoundFile.isPaused()) {                                  
+        $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]').html(pauseButtonTemplate);                              //Ncc Assignment-20 addition
+        $(this).html(playerBarPauseButton);                             
+        currentSoundFile.play();                                         
+    }
+    if (currentSoundFile) {
+        $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]').html(playButtonTemplate);  
+        $(this).html(playerBarPlayButton);                           
+        currentSoundFile.pause();                                       
+    }
+};                                                                          
+
 var updatePlayerBarSong = function() {
 
     $('.currently-playing .song-name').text(currentSongFromAlbum.title);
@@ -218,9 +233,11 @@ var updatePlayerBarSong = function() {
  
  var $previousButton = $('.main-controls .previous');
  var $nextButton = $('.main-controls .next');
+ var $playPauseButton = $('.main-controls .play-pause');            //Ncc Assignment-20 addition
  
  $(document).ready(function() {
      setCurrentAlbum(albumPicasso);
      $previousButton.click(previousSong);
      $nextButton.click(nextSong);
+     $playPauseButton.click(togglePlayFromPlayerBar);               //Ncc Assignment-20 addition
  });
