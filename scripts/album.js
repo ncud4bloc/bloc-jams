@@ -32,11 +32,14 @@ var getSongNumberCell = function(number) {
 };
 
  var createSongRow = function(songNumber, songName, songLength) {
+     
+     var songLengthMinSec = filterTimeCode(songLength);                 // Ncc Assignment-21 addition
+     
      var template =
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + songLength + '</td>'
+      + '  <td class="song-item-duration">' + songLengthMinSec + '</td>'    // Ncc Assignment-21 update
       + '</tr>'
       ;
  
@@ -58,6 +61,7 @@ var getSongNumberCell = function(number) {
                   currentSoundFile.play();
                   updateSeekBarWhileSongPlays();                            //Ncc Checkpoint-21 update
                   updatePlayerBarSong();
+
                 
                   var $volumeFill = $('.volume .fill');
                   var $volumeThumb = $('.volume .thumb');
@@ -130,6 +134,20 @@ var getSongNumberCell = function(number) {
      }
  };
 
+var filterTimeCode = function(timeInSeconds) {                         // Ncc Assignment-21 addition
+	var seconds = parseFloat(timeInSeconds);                           // Ncc Assignment-21 addition
+	
+	var myMin = Math.floor(seconds /60);                               // Ncc Assignment-21 addition
+	var mySec = Math.floor(seconds % 60);                              // Ncc Assignment-21 addition
+	
+	if(mySec < 10) {                                                   // Ncc Assignment-21 addition
+		var newTimeFormat = myMin +":0" + mySec;                       // Ncc Assignment-21 addition
+	} else {                                                           // Ncc Assignment-21 addition
+		var newTimeFormat = myMin +":" + mySec;                        // Ncc Assignment-21 addition
+	}                                                                  // Ncc Assignment-21 addition
+	return newTimeFormat;                                              // Ncc Assignment-21 addition
+};                                                                     // Ncc Assignment-21 addition
+
  var updateSeekBarWhileSongPlays = function() {
      if (currentSoundFile) {
          // #10
@@ -139,6 +157,11 @@ var getSongNumberCell = function(number) {
              var $seekBar = $('.seek-control .seek-bar');
  
              updateSeekPercentage($seekBar, seekBarFillRatio);
+             
+             var nccTime = this.getTime();                          // Ncc Assignment-21 addition
+             var timeMinSec = filterTimeCode(nccTime);              // Ncc Assignment-21 addition
+             setCurrentTimeInPlayerBar(timeMinSec);                 // Ncc Assignment-21 addition             
+//             console.log(this.getDuration());       
          });
      }
  };
@@ -154,6 +177,14 @@ var getSongNumberCell = function(number) {
     $seekBar.find('.fill').width(percentageString);
     $seekBar.find('.thumb').css({left: percentageString});
  };
+
+var setCurrentTimeInPlayerBar = function(currentTime) {             // Ncc Assignment-21 addition
+    $('.current-time').text(currentTime);                           // Ncc Assignment-21 addition
+};                                                                  // Ncc Assignment-21 addition
+
+var setTotalTimeInPlayerBar = function(totalTime) {                 // Ncc Assignment-21 addition
+    $('.total-time').text(totalTime);                               // Ncc Assignment-21 addition
+};                                                                  // Ncc Assignment-21 addition
 
  var setupSeekBars = function() {
      // #6
@@ -289,6 +320,15 @@ var updatePlayerBarSong = function() {
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     $('.main-controls .play-pause').html(playerBarPauseButton);
+
+    if (currentSoundFile) {                                                 // Ncc Assignment-21 addition
+         currentSoundFile.bind('timeupdate', function(event) {              // Ncc Assignment-21 addition
+                    
+             var nccTotalTime = this.getDuration();                         // Ncc Assignment-21 addition
+             var totalTimeMinSec = filterTimeCode(nccTotalTime);            // Ncc Assignment-21 addition
+             setTotalTimeInPlayerBar(totalTimeMinSec);                      // Ncc Assignment-21 addition                   
+         });                                                                // Ncc Assignment-21 addition
+     }                                                                      // Ncc Assignment-21 addition
 };
 
 
